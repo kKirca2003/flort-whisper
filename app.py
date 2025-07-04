@@ -1,7 +1,6 @@
 # 1. Gerekli kütüphaneleri import ediyoruz
 from flask import Flask, render_template, request, redirect, url_for, session
 from pymongo import MongoClient
-import certifi
 from datetime import datetime
 from bson.objectid import ObjectId
 import os
@@ -19,10 +18,8 @@ app.secret_key = 'flort_whisper_icin_cok_gizli_bir_anahtar_12345'
 MONGO_URI = os.environ.get('MONGO_URI')
 # --------------------------------------------------------------------------
 
-ca =certifi.where()
-
 # MongoDB sunucusuna bağlanıyoruz
-client = MongoClient(MONGO_URI, tlsCAFile=ca)
+client = MongoClient(MONGO_URI, tlsAllowInvalidCertificates=True)
 
 # 'flort_whisper_db' adında bir veritabanı seçiyoruz (yoksa kendi oluşturur)
 db = client['flort_whisper_db']
