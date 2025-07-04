@@ -1,0 +1,71 @@
+/* Sayfanın tamamına etki eden temel kurallar */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5; /* Hafif gri bir arkaplan */
+    color: #1c1e21; /* Koyu gri yazı rengi */
+    line-height: 1.6; /* Satır aralarını rahatlatır */
+    margin: 0;
+    padding: 20px;
+}
+
+/* Tüm içeriği sarmalayan ve ortalayan bir ana kutu (container) */
+.container {
+    max-width: 800px; /* Kutunun maksimum genişliği */
+    margin: 0 auto; /* Kutuyu yatayda ortalar */
+    background-color: #ffffff; /* Kutu içi beyaz */
+    padding: 20px 40px; /* Kutu içi boşluk (üst-alt, sağ-sol) */
+    border-radius: 8px; /* Köşeleri yuvarlatır */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hafif bir gölge efekti */
+}
+
+/* Başlıkların stilleri */
+h1, h2, h3 {
+    color: #333;
+}
+
+/* Linklerin (a etiketleri) stilleri */
+a {
+    color: #007bff; /* Mavi link rengi */
+    text-decoration: none; /* Altındaki çizgiyi kaldırır */
+}
+
+a:hover {
+    text-decoration: underline; /* Fare üzerine gelince altını çiz */
+}
+
+/* Form elemanları için temel stiller */
+input[type="text"], textarea {
+    width: 100%; /* Genişliği bulunduğu kutuya yayar */
+    padding: 10px;
+    margin-bottom: 10px; /* Altındaki elemanla arasına boşluk koyar */
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; /* Padding ve border'ı genişliğe dahil eder */
+}
+
+/* Buton stilleri */
+button {
+    background-color: #007bff; /* Mavi buton rengi */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer; /* Fare üzerine gelince el işareti çıkar */
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #0056b3; /* Fare üzerine gelince rengi koyulaşır */
+}
+
+/* Yorum listesi için basit stil */
+ul {
+    list-style-type: none; /* Liste başındaki noktaları kaldırır */
+    padding: 0;
+}
+
+li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}

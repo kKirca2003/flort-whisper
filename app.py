@@ -1,19 +1,22 @@
 # 1. Gerekli kütüphaneleri import ediyoruz
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from pymongo import MongoClient
 import certifi
 from datetime import datetime
+from bson.objectid import ObjectId
+import os
 
 
 # 2. Flask uygulamamızı standart olarak başlatıyoruz
 app = Flask(__name__)
 
+app.secret_key = 'flort_whisper_icin_cok_gizli_bir_anahtar_12345'
 
 # 3. MONGODB BAĞLANTI KISMI
 # --------------------------------------------------------------------------
 # BURASI ÇOK ÖNEMLİ!
 # Birazdan MongoDB Atlas'tan kopyaladığın o uzun linki bu tırnakların arasına yapıştıracaksın.
-MONGO_URI = "mongodb+srv://kaankirca2019:9dybK4U5t2FsKdfb@flortwhispercluster.zlqvgea.mongodb.net/?retryWrites=true&w=majority&appName=FlortWhisperCluster"
+MONGO_URI = os.environ.get('MONGO_URI')
 # --------------------------------------------------------------------------
 
 ca =certifi.where()
@@ -65,7 +68,11 @@ def kisi_profili(kisi_adi):
     if request.method == 'POST':
         new_comment_text = request.form.get('comment')
         if new_comment_text:
-            comment_doc = {'text': new_comment_text, 'timestamp': datetime.now()}
+            comment_doc = {
+                '_id': ObjectId(),
+                'text': new_comment_text, 'timestamp': datetime.now(),
+                'timestamp': datetime.now()
+            }
             people_collection.update_one(
                 {'name': kisi_adi},
                 {'$push': {'comments': comment_doc}}
@@ -87,6 +94,41 @@ def yeni_kisi_olustur(kisi_adi):
     #Eğer sayfa ilk kez ziyaret ediliyorsa (GET), onay sayfasını göster
     return render_template('yeni_kisi_formu.html', kisi_adi=kisi_adi)
 
+@app.route('/yorum_sil/<kisi_adi>/<yorum_id>')
+def yorum_sil(kisi_adi, yorum_id):
+    #GÜVENLİK KONTROLÜ
+    if not session.get('is_admin'):
+        return "Bu işlem için yetkiniz yok!", 403 #403 Forbidden hatası
+    # URL'den gelen yorum_id'si bir string'dir.
+    # Onu MongoDB'nin anlayacağı ObjectId formatına çeviriyoruz.
+    yorum_id_obj = ObjectId(yorum_id)
+  
+    # MongoDB'nin '$pull' operatörünü kullanarak,
+    # 'comments' dizisinin içinden, _id'si bizim verdiğimiz ID ile eşleşen objeyi söküp atıyoruz.
+    people_collection.update_one(
+        {'name': kisi_adi},
+        {'$pull': {'comments': {'_id': yorum_id_obj}}}
+    )
+
+    # İşlem bittikten sonra kullanıcıyı profil sayfasına geri yönlendiriyoruz.
+    return redirect(url_for('kisi_profili', kisi_adi=kisi_adi))
+
+
+@app.route('/admin', methods=['GET', 'POST'])
+def admin_login():
+    #Eğer admin zaten giriş yapmışsa ve tekrar bu sayfaya gelirse, ana sayfaya yönlendir.
+    if 'is_admin' in session and session['is_admin']:
+        return redirect(url_for('home'))
+
+    if request.method == 'POST':
+        password = request.form.get('password')
+        if password == 'Kkirca123*':
+            session['is_admin'] = True
+            return redirect(url_for('home'))
+        else:
+            return "Hatalı şifre!", 401
+    
+    return render_template('admin_login.html')
 # 6. VERİTABANINI İLK VERİLERLE DOLDURMAK (Bir kerelik)
 # Eğer 'people' koleksiyonumuzun içinde hiç veri yoksa, bu kod çalışır.
 if people_collection.count_documents({}) == 0:

@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>"{{ kisi_adi }}" Başlığını Oluştur - Flört Whisper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <div class="container">
     <a href="{{ url_for('home') }}">Ana Sayfaya Dön</a>
     <hr>
 
@@ -17,5 +19,6 @@
     <form method="POST">
         <button type="submit">Evet, Bu Başlığı Oluştur</button>
     </form>
+    </div>
 </body>
 </html>

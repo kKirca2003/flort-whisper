@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ person.name }} Profili - Flört Whisper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <div class="container">
     <a href="{{ url_for('home') }}">Ana Sayfaya Dön</a>
     <hr>
 
@@ -13,7 +15,12 @@
     <h2>Yorumlar</h2>
     <ul>
         {% for comment in person.comments %}
-            <li>{{ comment.text }}</li>
+            <li>
+                {{ comment.text }}
+                {% if session.get('is_admin') %}
+                <a href="{{ url_for('yorum_sil', kisi_adi=person.name, yorum_id=comment._id) }}" style="color:red; text-decoration:none;">[Sil]</a>
+                {% endif %}
+            </li>
         {% else %}
             <li>Henüz hiç yorum yapılmamış. İlk yorumu sen yap!</li>
         {% endfor %}
@@ -27,5 +34,6 @@
         <br>
         <button type="submit">Gönder</button>
     </form>
+    </div>
 </body>
 </html>

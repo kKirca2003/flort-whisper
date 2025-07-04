@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Girişi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Girişi</h1>
+        <form method="POST">
+            <input type="password" name="password" placeholder="Şifrenizi Girin" required>
+            <br><br>
+            <button type="submit">Giriş Yap</button>
+        </form>
+    </div>
+</body>
+</html>
