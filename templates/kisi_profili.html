@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ person.name }} Profili - Flört Whisper</title>
+</head>
+<body>
+    <a href="{{ url_for('home') }}">Ana Sayfaya Dön</a>
+    <hr>
+
+    <h1>{{ person.name }}</h1>
+
+    <h2>Yorumlar</h2>
+    <ul>
+        {% for comment in person.comments %}
+            <li>{{ comment.text }}</li>
+        {% else %}
+            <li>Henüz hiç yorum yapılmamış. İlk yorumu sen yap!</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <h3>Yeni Yorum Ekle</h3>
+    <form method="POST">
+        <textarea name="comment" rows="4" cols="50" placeholder="Dedikodunu yaz..." required></textarea>
+        <br>
+        <button type="submit">Gönder</button>
+    </form>
+</body>
+</html>

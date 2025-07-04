@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>"{{ kisi_adi }}" Başlığını Oluştur - Flört Whisper</title>
+</head>
+<body>
+    <a href="{{ url_for('home') }}">Ana Sayfaya Dön</a>
+    <hr>
+
+    <h1>Başlık Bulunamadı</h1>
+    <p>
+        <b>"{{ kisi_adi }}"</b> adında yeni bir başlık oluşturmak üzeresin.
+    </p>
+    <p>Devam etmek istiyor musun?</p>
+
+    <form method="POST">
+        <button type="submit">Evet, Bu Başlığı Oluştur</button>
+    </form>
+</body>
+</html>

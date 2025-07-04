@@ -1,0 +1,3 @@
+mongodb username = kaankirca2019
+mondodb pass = 9dybK4U5t2FsKdfb
+önemi not = mongodb+srv://kaankirca2019:9dybK4U5t2FsKdfb@flortwhispercluster.zlqvgea.mongodb.net/?retryWrites=true&w=majority&appName=FlortWhisperCluster

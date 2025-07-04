@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-T">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flört Whisper</title>
-    </head>
+</head>
 <body>
-
     <h1>Flört Whisper'a Hoş Geldin!</h1>
-    <p>
-        Tanınmış kişiler hakkındaki en son dedikoduları keşfet.
-    </p>
-
-    </body>
+    <p>Tanınmış kişiler hakkındaki en son dedikoduları keşfet.</p>
+    
+    <form method="POST" action="{{ url_for('arama_yap') }}">
+        <input type="text" name="query" placeholder="Kişi adı ara veya yeni başlık aç..." size="40" required>
+        <button type="submit">Ara / Oluştur</button>
+    </form>
+    
+    <hr>
+    
+    <h2>Popüler Başlıklar</h2>
+    <ul>
+        {% for person in people %}
+            <li>
+                <a href="{{ url_for('kisi_profili', kisi_adi=person.name) }}">
+                    {{ person.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
 </html>
